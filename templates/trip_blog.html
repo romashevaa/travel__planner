@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Блог подорожі: {{ trip.title }}</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.content.label }}<br>
+    {{ form.content(rows=4) }}<br>
+    {{ form.submit() }}
+</form>
+
+<hr>
+<h3>Пости:</h3>
+{% for post in posts %}
+<div style="margin-bottom: 1em;">
+    <strong>{{ post.author.name }}</strong>
+    <em>({{ post.timestamp.strftime('%Y-%m-%d %H:%M') }})</em><br>
+    <p>{{ post.content }}</p>
+</div>
+{% else %}
+<p>Ще немає постів.</p>
+{% endfor %}
+
+<a href="{{ url_for('view_trip', trip_id=trip.id) }}">← Назад до подорожі</a>
+{% endblock %}
