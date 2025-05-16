@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Мої подорожі</h2>
+<a href="{{ url_for('trips.create_trip') }}">+ Створити подорож</a>
+<ul>
+    {% for trip in trips %}
+    <li><a href="{{ url_for('trips.view_trip', trip_id=trip.id) }}">{{ trip.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

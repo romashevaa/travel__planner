@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, DateField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
-from wtforms import TextAreaField, DateField
 
 
 class RegisterForm(FlaskForm):
@@ -10,7 +9,7 @@ class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Пароль', validators=[
                              DataRequired(), Length(min=6)])
-    confirm = PasswordField('Повтор пароля', validators=[
+    confirm = PasswordField('Підтвердіть пароль', validators=[
                             DataRequired(), EqualTo('password')])
     submit = SubmitField('Зареєструватися')
 
@@ -22,13 +21,14 @@ class LoginForm(FlaskForm):
 
 
 class TripForm(FlaskForm):
-    title = StringField('Назва подорожі', validators=[DataRequired()])
+    title = StringField('Назва', validators=[DataRequired()])
     description = TextAreaField('Опис')
     start_date = DateField('Дата початку')
     end_date = DateField('Дата завершення')
+    is_public = BooleanField('Зробити публічною')
     submit = SubmitField('Створити подорож')
 
 
 class PostForm(FlaskForm):
-    content = TextAreaField('Ваш пост', validators=[DataRequired()])
+    content = TextAreaField('Вміст', validators=[DataRequired()])
     submit = SubmitField('Опублікувати')

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Публічні подорожі</h2>
+<ul>
+    {% for trip in trips %}
+    <li><strong>{{ trip.title }}</strong> — {{ trip.description }} ({{ trip.start_date }} → {{ trip.end_date }})</li>
+    {% else %}
+    <li>Наразі немає публічних подорожей.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

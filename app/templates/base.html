@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title or 'Travel Planner' }}</title>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <p><strong>{{ category }}:</strong> {{ message }}</p>
+    {% endfor %}
+    {% endwith %}
+
+    {% if current_user.is_authenticated %}
+    <p>
+        Привіт, {{ current_user.name }} |
+        <a href="{{ url_for('trips.dashboard') }}">Мої подорожі</a> |
+        <a href="{{ url_for('trips.explore') }}">Публічні подорожі</a> |
+        <a href="{{ url_for('auth.logout') }}">Вийти</a>
+    </p>
+    {% else %}
+    <a href="{{ url_for('auth.login') }}">Вхід</a> |
+    <a href="{{ url_for('auth.register') }}">Реєстрація</a>
+    {% endif %}
+
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+
+</html>

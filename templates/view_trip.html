@@ -1,7 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-<h2>{{ trip.title }}</h2>
-<p><strong>Опис:</strong> {{ trip.description }}</p>
-<p><strong>Період:</strong> {{ trip.start_date }} – {{ trip.end_date }}</p>
-<p><a href="{{ url_for('dashboard') }}">← Назад до списку</a></p>
-{% endblock %}
