@@ -7,6 +7,13 @@ from ..extensions import db
 trips_bp = Blueprint('trips', __name__)
 
 
+@trips_bp.route('/')
+def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('trips.dashboard'))
+    return redirect(url_for('trips.explore'))
+
+
 @trips_bp.route('/dashboard')
 @login_required
 def dashboard():
@@ -34,12 +41,19 @@ def create_trip():
 
 
 @trips_bp.route('/trip/<int:trip_id>')
-@login_required
 def view_trip(trip_id):
     trip = Trip.query.get_or_404(trip_id)
+
+    # Гість — заборона
+    if not current_user.is_authenticated:
+        flash('Авторизуйтесь, щоб переглянути повну подорож.', 'warning')
+        return redirect(url_for('auth.login'))
+
+    # Не власник — заборона
     if trip.owner != current_user:
         flash('Доступ заборонено.', 'danger')
         return redirect(url_for('trips.dashboard'))
+
     return render_template('view_trip.html', trip=trip)
 
 

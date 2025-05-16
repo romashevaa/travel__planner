@@ -3,7 +3,16 @@
 <h2>Публічні подорожі</h2>
 <ul>
     {% for trip in trips %}
-    <li><strong>{{ trip.title }}</strong> — {{ trip.description }} ({{ trip.start_date }} → {{ trip.end_date }})</li>
+    <li>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('trips.view_trip', trip_id=trip.id) }}">
+            {{ trip.title }}
+        </a>
+        {% else %}
+        <strong>{{ trip.title }}</strong> <em>(доступ лише після входу)</em>
+        {% endif %}
+        — {{ trip.description }} ({{ trip.start_date }} → {{ trip.end_date }})
+    </li>
     {% else %}
     <li>Наразі немає публічних подорожей.</li>
     {% endfor %}
